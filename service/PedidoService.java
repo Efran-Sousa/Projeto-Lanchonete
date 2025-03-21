@@ -24,14 +24,16 @@ public class PedidoService {
         pedido.mostrarFatura();
     }
     
+    public double calcularTroco(Pedido pedido, double valorPago) {
+        double total = pedido.calcularTotal();
+        return valorPago - total;
+    }
+    
     public double finalizarPedido(Pedido pedido, double valorPago, Vendedor vendedor) {
         double total = pedido.calcularTotal();
         double troco = valorPago - total;
-        double bonus = vendedor.calcularBonus(total);
-        
-        System.out.printf("Troco: %s%n", FormatadorMoeda.formatar(troco));
-        System.out.printf("Bônus do vendedor nesta venda: %s%n", 
-                FormatadorMoeda.formatar(bonus));
+        // Processa o bônus mas não imprime nada
+        vendedor.calcularBonus(total);
         
         return troco;
     }
